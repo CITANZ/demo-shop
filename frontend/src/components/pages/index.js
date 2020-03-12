@@ -1,0 +1,6 @@
+export { default as HomePage } from './HomePage.vue'
+export { default as Page } from './Page.vue'
+export { default as Product } from './Product.vue'
+export { default as CartPage } from './CartPage.vue'
+export { default as CheckoutPage } from './CheckoutPage.vue'
+export { default as PaymentResult } from './PaymentResult.vue'

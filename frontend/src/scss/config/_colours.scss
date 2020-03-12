@@ -1,0 +1,54 @@
+$eeri-black     :   #201D1F;
+$white          :   #ffffff;
+$max-yellow-red :   #E6C04C;
+$donkey-brown   :   #65562D;
+$cafe-noir      :   #423826;
+
+$grey-darker    :   $eeri-black;
+$gold           :   $max-yellow-red;
+
+.color {
+    &-is {
+        &-gold {
+            color: $gold !important;
+        }
+
+        &-red {
+            color: $danger !important;
+        }
+    }
+}
+
+.bg-eerie-black {
+    background-color: $eeri-black;
+}
+
+.button {
+    &.is {
+        &-gold {
+            border: none;
+            color: $eeri-black;
+            background-color: $max-yellow-red;
+
+            &:hover,
+            &:active,
+            &:focus {
+                background-color: $eeri-black;
+                color: $max-yellow-red;
+            }
+        }
+
+        &-black {
+            border: none;
+            color: $max-yellow-red;
+            background-color: $eeri-black;
+
+            &:hover,
+            &:active,
+            &:focus {
+                background-color: $gold;
+                color: $eeri-black;
+            }
+        }
+    }
+}
