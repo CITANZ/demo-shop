@@ -30,7 +30,9 @@ export default {
             data.append('class', this.product.class);
             data.append('qty', this.qty);
 
-            this.$cart.dispatch('add_to_cart', data);
+            this.$cart.dispatch('add_to_cart', data).then(() => {
+                alert('Product added! Now go to "Cart"');
+            });
         }
     }
 }

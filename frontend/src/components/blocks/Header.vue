@@ -17,6 +17,9 @@
                 <div class="navbar-item" v-for="item in navigation">
                     <router-link :to="item.url">{{item.label}}</router-link>
                 </div>
+                <div class="navbar-item">
+                    <router-link to="/cart">Cart</router-link>
+                </div>
             </div>
         </div>
     </nav>
