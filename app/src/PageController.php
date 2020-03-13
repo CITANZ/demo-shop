@@ -11,7 +11,6 @@ namespace
     use SilverStripe\View\ArrayData;
     use SilverStripe\View\Requirements;
     use SilverStripe\Control\Director;
-    use Leochenftw\Util\CacheHandler;
     use SilverStripe\ErrorPage\ErrorPage;
 
     class PageController extends ContentController
@@ -33,9 +32,12 @@ namespace
          */
         private static $allowed_actions = [];
 
-        public function index(HTTPRequest $request)
+        protected function handleAction($request, $action)
         {
-            // check for CORS options request
+            if (!$this->request->isAjax()) {
+                return parent::handleAction($request, $action);
+            }
+
             if ($this->request->httpMethod() === 'OPTIONS' ) {
                 // create direct response without requesting any controller
                 $response   =   $this->getResponse();
@@ -47,42 +49,9 @@ namespace
 
             $header     =   $this->getResponse();
 
-            if ($this->request->isAjax()) {
-                $this->addCORSHeaders($header);
-                if (SiteConfig::current_site_config()->UnderMaintenance) {
+            $this->addCORSHeaders($header);
 
-                    if ($this->ClassName == ErrorPage::class && $this->ErrorCode == '503') {
-                        $this->getResponse()->setStatusCode(503);
-                        return json_encode($this->getData());
-                    }
-
-                    if ($page = ErrorPage::get()->filter(['ErrorCode' => '503'])->first()) {
-                        $this->getResponse()->setStatusCode(503);
-                        return json_encode([
-                            'redirect'  =>   $page->Link()
-                        ]);
-                    }
-
-                    return $this->httpError(503);
-                } elseif ($this->ClassName == ErrorPage::class && $this->ErrorCode == '503') {
-                    $this->getResponse()->setStatusCode(503);
-                    return json_encode([
-                        'redirect'  =>   '/'
-                    ]);
-                }
-
-                return json_encode($this->getData());
-            }
-
-            if (SiteConfig::current_site_config()->UnderMaintenance) {
-                if ($this->ClassName != ErrorPage::class || $this->ErrorCode != '503') {
-                    if ($page = ErrorPage::get()->filter(['ErrorCode' => '503'])->first()) {
-                        return $this->redirect($page->Link(), 503);
-                    }
-                }
-            }
-
-            return $this->renderWith([$this->ClassName, 'Page']);
+            return json_encode($this->getData());
         }
 
         protected function init()
