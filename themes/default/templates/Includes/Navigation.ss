@@ -33,11 +33,11 @@
                 <% if $Children %>
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link<% if LinkOrCurrent = current || $LinkOrSection = section %> is-active<% end_if %>" href="$Link">$MenuTitle.XML</a>
-                    <%-- <div class="navbar-dropdown ">
+                    <div class="navbar-dropdown ">
                         <% loop Children %>
                             <a class="navbar-item<% if LinkOrCurrent = current %> is-active<% end_if %>" href="$Link">$MenuTitle.XML</a>
                         <% end_loop %>
-                    </div> --%>
+                    </div>
                 </div>
                 <% else %>
                 <a class="navbar-item<% if LinkOrCurrent = current || $LinkOrSection = section %> is-active<% end_if %>" href="$Link">$MenuTitle.XML</a>
