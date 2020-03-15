@@ -53,23 +53,21 @@
                         </tr>
                     </tbody>
                     <tfoot>
-                        <template v-if="site_data.cart.discount">
-                        <tr v-for="item in site_data.cart.discount">
-                            <td colspan="2">{{item.title}}:</td>
-                            <td class="has-text-right">-{{item.amount.toDollar()}}</td>
+                        <tr v-if="site_data.cart.discount">
+                            <td colspan="2">{{site_data.cart.discount.title}}: {{site_data.cart.discount.desc}}</td>
+                            <td class="has-text-right">-{{site_data.cart.discount.amount.toDollar()}}</td>
                         </tr>
-                        </template>
                         <tr v-if="site_data.cart.gst">
                             <td colspan="2">GST</td>
                             <td class="has-text-right">{{site_data.cart.gst.toDollar()}}</td>
                         </tr>
                         <tr v-if="site_data.freight">
                             <td colspan="2">Shipping: {{site_data.freight.title}}</td>
-                            <td class="has-text-right">{{site_data.freight.price.toDollar()}}</td>
+                            <td class="has-text-right">{{site_data.cart.shipping_cost}}</td>
                         </tr>
                         <tr>
                             <td colspan="2" class="has-text-right">Grand Total:</td>
-                            <td class="has-text-right">{{site_data.payment.amount.toDollar()}}</td>
+                            <td class="has-text-right">{{site_data.cart.grand_total.toDollar()}}</td>
                         </tr>
                     </tfoot>
                 </table>
