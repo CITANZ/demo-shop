@@ -1,5 +1,5 @@
 <template>
-<form method="post">
+<form method="post" @submit.prevent="update_qty">
     <fieldset :disabled="is_working">
         <div class="columns">
             <div class="column">{{item.product.title}} {{item.product.variant_title ? ('- ' + item.product.variant_title) : ''}}</div>

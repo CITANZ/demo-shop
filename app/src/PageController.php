@@ -155,7 +155,6 @@ namespace
                 $response->addHeader('Access-Control-Allow-Methods', $config['CORSMethods']);
                 $response->addHeader('Access-Control-Max-Age', $config['CORSMaxAge']);
                 $response->addHeader('Access-Control-Allow-Headers', $config['CORSAllowHeaders']);
-
                 if ($config['CORSAllowCredentials']) {
                     $response->addHeader('Access-Control-Allow-Credentials', 'true');
                 }

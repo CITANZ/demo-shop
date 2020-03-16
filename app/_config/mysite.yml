@@ -44,6 +44,10 @@ Cita\eCommerce\Model\Order:
   extensions:
     - App\Web\Extension\OrderExtendsion
 
+Cita\eCommerce\Model\Product:
+  extensions:
+    - App\Web\Extension\ProductExtension
+
 # ---
 # Only:
 #   environment: 'live'
