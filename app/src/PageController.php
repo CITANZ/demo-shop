@@ -60,7 +60,7 @@ namespace
             parent::init();
             Requirements::css('leochenftw/leoss4bk: client/dist/app.css');
             Requirements::javascript('https://js.stripe.com/v3/');
-            // Requirements::javascript('leochenftw/leoss4bk: client/dist/app.js');
+            Requirements::javascript('leochenftw/leoss4bk: client/dist/app.js');
         }
 
         public function MetaTags($includeTitle = true)
