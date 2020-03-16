@@ -36,10 +36,10 @@ class HomePage extends Page
         if (empty($data)) {
 
             $data   =   parent::getData();
-            
+
             CacheHandler::save('page.' . $this->ID, $data, 'PageData');
         }
 
-        return $this->attach_session($data);
+        return $data;
     }
 }

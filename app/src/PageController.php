@@ -2,7 +2,6 @@
 
 namespace
 {
-
     use SilverStripe\CMS\Controllers\ContentController;
     use SilverStripe\Core\Config\Config;
     use SilverStripe\Core\Convert;
@@ -12,6 +11,7 @@ namespace
     use SilverStripe\View\Requirements;
     use SilverStripe\Control\Director;
     use SilverStripe\ErrorPage\ErrorPage;
+    use SilverStripe\Security\SecurityToken;
 
     class PageController extends ContentController
     {
@@ -48,10 +48,11 @@ namespace
             }
 
             $header     =   $this->getResponse();
-
             $this->addCORSHeaders($header);
 
-            return json_encode($this->getData());
+            return json_encode(array_merge($this->getData(), [
+                'session' => ['csrf' => SecurityToken::inst()->getSecurityID()]
+            ]));
         }
 
         protected function init()
@@ -59,7 +60,7 @@ namespace
             parent::init();
             Requirements::css('leochenftw/leoss4bk: client/dist/app.css');
             Requirements::javascript('https://js.stripe.com/v3/');
-            Requirements::javascript('leochenftw/leoss4bk: client/dist/app.js');
+            // Requirements::javascript('leochenftw/leoss4bk: client/dist/app.js');
         }
 
         public function MetaTags($includeTitle = true)

@@ -31,7 +31,7 @@ $SiteConfig.GTMBody.RAW
     $Layout
 </main>
 <% else %>
-<div id=app>
+<div id="app" class="">
     <% include Header %>
     <main id="main" class="main">
         $Layout

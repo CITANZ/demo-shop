@@ -3,7 +3,8 @@
     "extra": {
         "expose": [
             "client/dist",
-            "client/js"
+            "client/js",
+            "client/webfonts"
         ]
     }
 }

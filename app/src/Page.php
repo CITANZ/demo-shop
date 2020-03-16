@@ -10,7 +10,6 @@ namespace
     use leochenftw\Util;
     use SilverStripe\Control\Director;
     use SilverStripe\Core\Convert;
-    use SilverStripe\Security\SecurityToken;
     use SilverStripe\Core\Flushable;
     use Leochenftw\Util\CacheHandler;
     use SilverStripe\Security\Member;
@@ -76,26 +75,6 @@ namespace
             ];
 
             $this->extend('getData', $data);
-
-            if ($data['pagetype'] == 'ErrorPage' || $data['pagetype'] == 'Page') {
-                $this->attach_session($data);
-            }
-
-            return $data;
-        }
-
-        public function attach_session(&$data)
-        {
-            $data['session']    =   [
-                'csrf'      =>  SecurityToken::inst()->getSecurityID()
-            ];
-
-            // uncomment below to allow the quick edit links to be included for the frontend use
-            // if ($member = Member::currentUser()) {
-            //     if ($member->inGroup('administrators')) {
-            //         $data['edit_link']  =   $this->get_cms_edit_link();
-            //     }
-            // }
 
             return $data;
         }
