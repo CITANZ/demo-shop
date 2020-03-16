@@ -607,7 +607,7 @@ export default {
                     // The payment has been processed!
                     if (result.paymentIntent.status === 'succeeded') {
                         this.check_stripe_payment_cleared(() => {
-                            this.$router.push('/cart/complete/success?order_id=' + this.site_data.id);
+                            this.$router.push('/cart/complete/' + this.site_data.id);
                         }, 500);
                     }
                 }
