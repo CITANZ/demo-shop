@@ -48,6 +48,10 @@ Cita\eCommerce\Model\Product:
   extensions:
     - App\Web\Extension\ProductExtension
 
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - App\Web\Extension\SiteConfigExtension
+
 # ---
 # Only:
 #   environment: 'live'
