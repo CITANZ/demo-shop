@@ -60,11 +60,6 @@ namespace
                 'pagetype'      =>  $this->get_type($this->ClassName),
                 'ancestors'     =>  $this->get_ancestors($this),
                 'meta'          =>  [
-                    'canonical'     =>  str_replace(
-                                            Director::absoluteBaseURL(),
-                                            $siteconfig->SocialBaseURL,
-                                            $this->ConanicalURL ? Convert::raw2att($this->ConanicalURL) : null
-                                        ),
                     'keywords'      =>  !empty($this->MetaKeywords) ? Convert::raw2att($this->MetaKeywords) : null,
                     'description'   =>  !empty($this->MetaDescription) ? Convert::raw2att($this->MetaDescription) : null,
                     'robots'        =>  Director::isLive() ?
@@ -73,6 +68,14 @@ namespace
                     'social'        =>  $this->get_og_twitter_meta()
                 ]
             ];
+
+            if (!empty($this->ConanicalURL)) {
+                $data['meta']['canonical']  =   str_replace(
+                    Director::absoluteBaseURL(),
+                    $siteconfig->SocialBaseURL,
+                    $this->ConanicalURL ? Convert::raw2att($this->ConanicalURL) : $this->AbsoluteLink()
+                );
+            }
 
             $this->extend('getData', $data);
 

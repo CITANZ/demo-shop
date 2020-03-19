@@ -1,28 +1,41 @@
 ## Overview
 
-Base project folder for a SilverStripe ([http://silverstripe.org](http://silverstripe.org)) installation. Required modules are installed via [http://github.com/silverstripe/recipe-cms](http://github.com/silverstripe/recipe-cms). For information on how to change the dependencies in a recipe, please have a look at [https://github.com/silverstripe/recipe-plugin](https://github.com/silverstripe/recipe-plugin). In addition, installer includes [theme/simple](https://github.com/silverstripe-themes/silverstripe-simple) as a default theme.
+This is a demo of CITANZ's eCommerce module. CITANZ members may use this repo to practise and familiarise themselves with SilverStripe 4.
 
 ## Installation ##
 
-See [installation on different platforms](http://doc.silverstripe.org/framework/en/installation/),
-and [installation from source](http://doc.silverstripe.org/framework/en/installation/from-source).
+`git pull` or `git clone` the repo to your environment, and then:
 
-## Bugtracker ##
+### Backend ###
+run `composer update` at wwwroot, and wait for it's finished.
 
-Bugs are tracked on github.com ([framework issues](https://github.com/silverstripe/silverstripe-framework/issues),
-[cms issues](https://github.com/silverstripe/silverstripe-cms/issues)).
-Please read our [issue reporting guidelines](https://docs.silverstripe.org/en/4/contributing/issues_and_bugs/).
+#### .env file example ####
+Now create a `.env` file at wwwroot, with below content -- please replace the CAP_VARs with your own information
+```
+SS_DATABASE_CLASS="MySQLPDODatabase"
+SS_DATABASE_SERVER="YOUR_DB_ADDRESS"
+SS_DATABASE_USERNAME="YOUR_DB_USERNAME"
+SS_DATABASE_PASSWORD="YOUR_DB_PASSWORD"
+SS_DATABASE_NAME="YOUR_DB_NAME"
 
-## Development and Contribution ##
+SS_DEFAULT_ADMIN_USERNAME="defaultadmin"
+SS_DEFAULT_ADMIN_PASSWORD="passw0rd"
 
-If you would like to make changes to the SilverStripe core codebase, we have an extensive [guide to contributing code](http://doc.silverstripe.org/framework/en/misc/contributing/code).
+SS_ENVIRONMENT_TYPE="dev"
+SS_ERROR_LOG="silverstripe.log"
+
+Cita_eCommerce_PaymentMethod_POLi='{"CERT":"CERT_PATH","CLIENTCODE":"POLI_CLIENT_CODE","AUTHCODE":"POLI_AUTH_CODE"}'
+Cita_eCommerce_PaymentMethod_DPS='{"ID":"DPS_CLIENT_ID","Key":"DPS_CLIENT_KEY"}'
+Cita_eCommerce_PaymentMethod_Paystation='{"pstn_pi":"PAYSTATION_ID","pstn_HMAC":"PAYSTATION_HMAC"}'
+Cita_eCommerce_PaymentMethod_Stripe='{"key_dev":"STRIPE_DEV_KEY","secret_dev":"STRIPE_DEV_SECRET","key":"STRIPE_LIVE_KEY","secret":"STRIPE_LIVE_SECRET"}'
+
+```
+Once you've completed above, go to the browser and type in http://YOURSITE/dev/build?flush=all (then hit enter)
+
+
+### Frontend ###
+go into `frontend` directory, run `npm install`, and wait for it to finish, and then `run npm run dev` (more commands are defined in `package.json` > `scripts` property)
 
 ## Links ##
 
- * [Changelogs](http://doc.silverstripe.org/framework/en/changelogs/)
- * [Bugtracker: Framework](https://github.com/silverstripe/silverstripe-framework/issues)
- * [Bugtracker: CMS](https://github.com/silverstripe/silverstripe-cms/issues)
- * [Bugtracker: Installer](https://github.com/silverstripe/silverstripe-installer/issues)
- * [Forums](http://silverstripe.org/forums)
- * [Developer Mailinglist](https://groups.google.com/forum/#!forum/silverstripe-dev)
- * [License](./LICENSE)
+ * [SilverStripe Lessons] https://www.silverstripe.org/learn/lessons/v4/

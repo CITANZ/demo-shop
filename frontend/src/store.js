@@ -62,7 +62,9 @@ export default new Vuex.Store({
         get_error_page({ commit }, error_code, resolve)
         {
             axios.get(base_url + error_code).catch((error) => {
-                commit('update_data', error.response.data);
+                if (error.response && error.reponse.data) {
+                    commit('update_data', error.response.data);
+                }
             });
         }
     }

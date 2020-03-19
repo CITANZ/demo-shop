@@ -12,6 +12,8 @@ namespace
     use SilverStripe\Control\Director;
     use SilverStripe\ErrorPage\ErrorPage;
     use SilverStripe\Security\SecurityToken;
+    use SilverStripe\ErrorPage\ErrorPage;
+    use SilverStripe\Security\Member;
 
     class PageController extends ContentController
     {
@@ -19,10 +21,6 @@ namespace
 
         protected function handleAction($request, $action)
         {
-            if (!$this->request->isAjax()) {
-                return parent::handleAction($request, $action);
-            }
-
             if ($this->request->httpMethod() === 'OPTIONS' ) {
                 // create direct response without requesting any controller
                 $response   =   $this->getResponse();
@@ -32,12 +30,35 @@ namespace
                 exit;
             }
 
-            $header     =   $this->getResponse();
+            if (!$this->request->isAjax()) {
+                return parent::handleAction($request, $action);
+            }
+
+            $header         =   $this->getResponse();
             $this->addCORSHeaders($header);
+
+            if (SiteConfig::current_site_config()->UnderMaintenance && !$this->isAdmin()) {
+                $header->setStatusCode(503, 'Under maintenance');
+
+                $error_page =   ErrorPage::get()->filter(['ErrorCode' => 503])->first();
+
+                if (!$error_page) {
+                    $error_page             =   Page::create();
+                    $error_page->Title      =   'Under Maintenance';
+                    $error_page->Content    =   '<p>CITANZ is under maintenance. Please check back later.</p>';
+                }
+
+                return json_encode($error_page->getData());
+            }
 
             return json_encode(array_merge($this->getData(), [
                 'session' => ['csrf' => SecurityToken::inst()->getSecurityID()]
             ]));
+        }
+
+        public function isAdmin()
+        {
+            return Member::currentUser() && Member::currentUser()->inGroup('administrators');
         }
 
         protected function init()
