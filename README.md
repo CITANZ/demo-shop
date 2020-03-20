@@ -1,6 +1,9 @@
-## Overview
+## Overview ##
 
 This is a demo of CITANZ's eCommerce module. CITANZ members may use this repo to practise and familiarise themselves with SilverStripe 4.
+
+## NOTE ##
+If you are having difficulty setting up demo-shop and getting it to run, you are strongly recommended reading through [SilverStripe Lessons] https://www.silverstripe.org/learn/lessons/v4/, especially https://www.silverstripe.org/learn/lessons/v4/up-and-running-setting-up-a-local-silverstripe-dev-environment-1
 
 ## Installation ##
 
@@ -35,7 +38,3 @@ Once you've completed above, go to the browser and type in http://YOURSITE/dev/b
 
 ### Frontend ###
 go into `frontend` directory, run `npm install`, and wait for it to finish, and then `run npm run dev` (more commands are defined in `package.json` > `scripts` property)
-
-## Links ##
-
- * [SilverStripe Lessons] https://www.silverstripe.org/learn/lessons/v4/
