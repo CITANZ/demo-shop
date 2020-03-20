@@ -1,15 +1,18 @@
 version: '3'
 services:
   web:
-    image: brettt89/silverstripe-web:7.2-debian-stretch
+    container_name: "ss4"
+    build:
+      context: .
     working_dir: /var/www
     volumes:
       - .:/var/www/html
     ports:
       - "80:80/tcp"
-    command: "composer update"
+    command: "php composer.phar update"
 
   database:
+    container_name: "mysql5.7"
     image: mysql:5.7
     volumes:
       - db-data:/var/lib/mysql
