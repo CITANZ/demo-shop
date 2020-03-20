@@ -12,7 +12,6 @@ namespace
     use SilverStripe\Control\Director;
     use SilverStripe\ErrorPage\ErrorPage;
     use SilverStripe\Security\SecurityToken;
-    use SilverStripe\ErrorPage\ErrorPage;
     use SilverStripe\Security\Member;
 
     class PageController extends ContentController
