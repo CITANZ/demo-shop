@@ -38,3 +38,14 @@ Once you've completed above, go to the browser and type in http://YOURSITE/dev/b
 
 ### Frontend ###
 go into `frontend` directory, run `npm install`, and wait for it to finish, and then `run npm run dev` (more commands are defined in `package.json` > `scripts` property)
+
+
+### Docker ###
+
+install docker desktop on your Mac/Winodws for starters
+
+`cd docker`
+
+`docker-compose up -d`
+
+if you want to mess up with your own docker file or start script, remember `docker-compose build ss4` to make it effective; if you want to tap into the ss4 container, do `docker run -it ss4 /bin/bash` when it's RUNNING.
