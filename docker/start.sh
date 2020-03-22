@@ -7,8 +7,6 @@ if [ ! -f $initialised ]
 	sed -i -e "s/\/var\/www\/html/\/var\/www\/html\/public/g" /etc/apache2/sites-available/000-default.conf 
 	# suppress the warning: Could not reliably determine the server's fully qualified domain name, using 192.168.80.2. Set the 'ServerName' directive globally 
 	echo "ServerName localhost" >> /etc/apache2/apache2.conf
-	# restart apache
-	apache2ctl stop && apache2ctl -D FOREGROUND
 	touch $initialised
 then
 	echo "skipping init"
@@ -27,4 +25,5 @@ then
 fi
 
 
-
+# restart apache, this would keep container terminating
+apache2ctl stop && apache2ctl -D FOREGROUND
