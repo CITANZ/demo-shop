@@ -40,11 +40,11 @@ jobs:
             - ./vendor
       - restore_cache:
           keys:
-            - node-v1-{{ checksum "package.json" }}
+            - node-v1-{{ checksum "./frontend/package.json" }}
             - node-v1-
       - run: cd frontend && yarn install
       - save_cache:
-          key: node-v1-{{ checksum "package.json" }}
+          key: node-v1-{{ checksum "./frontend/package.json" }}
           paths:
             - ./frontend/node_modules
 
