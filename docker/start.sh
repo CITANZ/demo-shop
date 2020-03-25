@@ -1,27 +1,44 @@
 #!/bin/bash
 
-initialised="/tmp/initialised"
-if [ ! -f $initialised ]
-	echo "init..."
+mkdir -p /state
+
+apache_updated="/state/apache_updated"
+if [ ! -f $apache_updated ]
+	echo "apache config setting..."
 	# replace apache's default config /var/www/html to /var/www/html/public
 	sed -i -e "s/\/var\/www\/html/\/var\/www\/html\/public/g" /etc/apache2/sites-available/000-default.conf 
 	# suppress the warning: Could not reliably determine the server's fully qualified domain name, using 192.168.80.2. Set the 'ServerName' directive globally 
 	echo "ServerName localhost" >> /etc/apache2/apache2.conf
-	touch $initialised
+	touch $apache_updated
 then
-	echo "skipping init"
+	echo "skipping apache config setting"
 fi
 
-# this is a signal whether composer update has been done
-file="/tmp/composer-updated"
+composer_file=/var/www/html/composer.json
+composer_checksum=`cksum $composer_file | awk '{print $1}'`
+composer_dependencies="/state/composer-$composer_checksum"
 
-if [ ! -f $file ]
-	echo "doing composer update..."
+if [ ! -f $composer_dependencies ]
+	echo "building backend..."
 	cd /var/www/html
 	composer update
-	touch $file
+	touch $composer_dependencies
 then
-	echo "skipping composer update"
+	echo "skipping backend build"
+fi
+
+
+package_file=/var/www/html/frontend/package.json
+package_checksum=`cksum $package_file | awk '{print $1}'`
+package_dependencies="/state/package-$package_checksum"
+
+if [ ! -f $package_dependencies ]
+	echo "building frontend..."
+	cd /var/www/html/frontend
+	npm i && npm run prod
+	touch $package_dependencies
+then
+	echo "skipping frontend build"
 fi
 
 
