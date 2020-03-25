@@ -95,6 +95,7 @@
                 <p class="help">Paid at {{site_data.payment.created.nzst(true)}}, with <strong>{{site_data.payment.payment_method}}</strong></p>
                 <hr />
                 <p v-if="show_payagain"><router-link class="button is-info" to="/cart">Try again</router-link></p>
+                <p v-else-if="require_approval"><a class="button is-warning" :href="site_data.payment.approval_url">Go Approve</a></p>
                 <p v-else-if="site_data.catalog"><router-link class="button is-info" :to="site_data.catalog">Keep shopping</router-link></p>
             </aside>
         </div>
@@ -111,6 +112,14 @@ export default {
         show_payagain()
         {
             if (this.site_data.payment.status == 'Cancelled' || this.site_data.payment.status == 'Pending' || this.site_data.payment.status == 'Failed') {
+                return true;
+            }
+
+            return false;
+        },
+        require_approval()
+        {
+            if (this.site_data.payment.payment_method == 'Paypal' && this.site_data.payment.status == 'Unverified' && this.site_data.payment.approval_url) {
                 return true;
             }
 
