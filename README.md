@@ -1,3 +1,9 @@
+<p align="center">
+<!--   this badge should point to our cicleci, please update it after setting up. Now it's referring to Vue.js  -->
+  <a href="https://circleci.com/gh/vuejs/vue/tree/dev"><img src="https://img.shields.io/circleci/project/github/vuejs/vue/dev.svg?sanitize=true" alt="Build Status"></a>
+<!--    Other badges to be added... -->
+</p>
+
 ## Overview ##
 
 This is a demo of CITANZ's eCommerce module. CITANZ members may use this repo to practise and familiarise themselves with SilverStripe 4.
