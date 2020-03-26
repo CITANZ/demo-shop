@@ -44,3 +44,37 @@ Once you've completed above, go to the browser and type in http://YOURSITE/dev/b
 
 ### Frontend ###
 go into `frontend` directory, run `npm install`, and wait for it to finish, and then `run npm run dev` (more commands are defined in `package.json` > `scripts` property)
+
+
+# Docker set-up 
+
+You can go with MAMP/WAMP/LAMP solutions or docker to set up the development environment. To try it out with docker, install Docker Desktop For Mac/Winodws as a start. Then
+
+```shell
+cd docker
+docker-compose up -d
+```
+
+this command will spin up a ss4 container and a mysql container with username as root and an empty password. In order to connect mysql from ss4 container, connection parameter in .env file must be specified as below:
+
+```
+SS_DATABASE_SERVER="db_mysql"
+SS_DATABASE_USERNAME="root"
+SS_DATABASE_PASSWORD=""
+SS_DATABASE_NAME="demo_shop"
+```
+
+Also, you must use mysql client(i.e Mysql Workbench) to connect database, create a demo_shop schema using utf-8 charset.
+
+
+if you would like to mess up with your own docker file or start script, remember `docker-compose build ss4` to make it effective; 
+
+## Debugging
+
+check logs of ss4:
+
+`docker logs --follow ss4`
+
+tap into the ss4: 
+
+`docker exec -it ss4 /bin/bash` when it's RUNNING.

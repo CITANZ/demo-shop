@@ -1,0 +1,30 @@
+version: '3.5'
+services:
+  ss4:
+    container_name: "ss4"
+    build:
+      context: .
+    volumes:
+      - ..:/var/www/html
+    ports:
+      - "80:80/tcp"
+    command: "/var/tmp/start.sh"
+
+  db_mysql:
+    container_name: "db_mysql"
+    image: mysql:5.7
+    volumes:
+      - db-data:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    ports:
+      - "3306:3306/tcp"
+
+volumes:
+  db-data:
+
+networks:
+  default:
+    name: demo_shop_nw
+  
