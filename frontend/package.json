@@ -73,7 +73,8 @@
     "vuex": "^3.1.2",
     "webpack": "^4.29.6",
     "webpack-dev-server": "^3.2.1",
-    "webpack-livereload-plugin": "^2.2.0"
+    "webpack-livereload-plugin": "^2.2.0",
+    "file-loader": "^6.0.0"
   },
   "devDependencies": {
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
