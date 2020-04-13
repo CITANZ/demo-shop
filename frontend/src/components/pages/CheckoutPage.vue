@@ -512,8 +512,7 @@ export default {
             this.no_available_option    =   false;
 
             let data    =   new FormData();
-            data.append('freight_id', this.site_data.checkout.freight);
-            data.append('country_code', this.shipping.country);
+            data.append('payload', JSON.stringify(this.site_data.checkout));
             this.$cart.dispatch('estimate_freight', data).then((resp) => {
                 this.site_data.checkout.freight_data    =   resp;
                 this.is_estimating                      =   false;
