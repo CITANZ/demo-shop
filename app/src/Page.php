@@ -7,7 +7,7 @@ namespace
     use SilverStripe\SiteConfig\SiteConfig;
     use SilverStripe\Control\Controller;
     use Leochenftw\Debugger;
-    use leochenftw\Util;
+    use Leochenftw\Util;
     use SilverStripe\Control\Director;
     use SilverStripe\Core\Convert;
     use SilverStripe\Core\Flushable;
