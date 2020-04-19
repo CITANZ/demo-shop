@@ -9,9 +9,10 @@
                 </tr>
                 <tr>
                     <td class="has-text-right">
-                        <strong>Sub total</strong>: {{site_data.cart.amount.toDollar()}}<br />
-                        <strong>GST</strong>: {{site_data.cart.gst.toDollar()}}<br />
-                        <strong>Grand total</strong>: {{site_data.cart.grand_total.toDollar()}}
+                        <p><strong>Sub total</strong>: {{site_data.cart.amount.toDollar()}}<br />
+                        <template v-if="site_data.cart.gst && site_data.cart.gst.toFloat()"><strong>GST</strong>: {{site_data.cart.gst.toDollar()}}<br /></template>
+                        <strong>Grand total</strong>: {{site_data.cart.grand_total.toDollar()}}</p>
+                        <p v-if="site_data.cart.gst_included && site_data.cart.gst_included.toFloat()" class="help has-text-right"><strong>Included GST</strong>: {{site_data.cart.gst_included.toDollar()}}</p>
                     </td>
                 </tr>
             </table>

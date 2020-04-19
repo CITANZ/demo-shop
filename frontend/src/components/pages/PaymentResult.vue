@@ -57,7 +57,7 @@
                             <td colspan="2">{{site_data.cart.discount.title}}: {{site_data.cart.discount.desc}}</td>
                             <td class="has-text-right">-{{site_data.cart.discount.amount.toDollar()}}</td>
                         </tr>
-                        <tr v-if="site_data.cart.gst">
+                        <tr v-if="site_data.cart.gst && site_data.cart.gst.toFloat()">
                             <td colspan="2">GST</td>
                             <td class="has-text-right">{{site_data.cart.gst.toDollar()}}</td>
                         </tr>
@@ -68,6 +68,10 @@
                         <tr>
                             <td colspan="2" class="has-text-right">Grand Total:</td>
                             <td class="has-text-right">{{site_data.cart.grand_total.toDollar()}}</td>
+                        </tr>
+                        <tr v-if="site_data.cart.gst_included && site_data.cart.gst_included.toFloat()">
+                            <td colspan="2" class="has-text-right"><p class="help">Included GST:</p></td>
+                            <td class="has-text-right"><p class="help">{{site_data.cart.gst_included.toDollar()}}</p></td>
                         </tr>
                     </tfoot>
                 </table>

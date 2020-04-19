@@ -280,6 +280,10 @@
                                 <td class="summary-label">GRAND TOTAL:</td>
                                 <td class="has-text-right">{{grand_total.toDollar()}}</td>
                             </tr>
+                            <tr v-if="included_gst">
+                                <td class="summary-label"><p class="help">INCL. GST:</p></td>
+                                <td class="has-text-right"><p class="help">{{included_gst.toDollar()}}</p></td>
+                            </tr>
                         </tfoot>
                     </table>
                 </div>
@@ -477,6 +481,11 @@ export default {
             if (!this.site_data || !this.site_data.checkout) return 0;
 
             return this.site_data.checkout.amount + this.discounted_amount + this.shipping_cost + this.GST;
+        },
+        included_gst() {
+            if (!this.site_data || !this.site_data.checkout) return 0;
+
+            return this.site_data.checkout.gst_included;
         }
     },
     methods     :   {
