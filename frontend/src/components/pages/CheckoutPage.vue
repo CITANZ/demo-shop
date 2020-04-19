@@ -287,9 +287,9 @@
                 <div class="field">
                     <h2 class="title is-5">Payment Method</h2>
                     <div class="columns is-multiline">
-                        <div class="column is-narrow" v-for="payment in site_data.payment_methods">
+                        <div class="column is-narrow" v-for="(title, gateway) in site_data.payment_methods">
                             <label class="radio">
-                                <input type="radio" name="payment_method" v-model="payment_method" :value="payment.gateway"> {{payment.title}}
+                                <input type="radio" name="payment_method" v-model="payment_method" :value="gateway"> {{title}}
                             </label>
                         </div>
                     </div>
@@ -312,7 +312,7 @@
         </form>
 
     </div>
-    <div :class="['modal', {'is-active': show_stripe_modal && payment_method == 'Cita\\eCommerce\\API\\Stripe' && client_secret}]">
+    <div :class="['modal', {'is-active': show_stripe_modal && payment_method == 'Stripe'}]">
         <div class="modal-background"></div>
         <form class="modal-content" method="post">
             <stripe-element
@@ -326,7 +326,7 @@
             />
             <div class="field actions is-grouped is-grouped-right">
                 <div class="control">
-                    <button type="submit" :class="['button is-info', {'is-loading': is_submitting}]" :disabled="!cdcompleted" @click.prevent="payByCard()">Pay {{grand_total.toDollar()}}</button>
+                    <button type="submit" :class="['button is-info', {'is-loading': is_submitting}]" :disabled="!cdcompleted" @click.prevent="payByCard">Pay {{grand_total.toDollar()}}</button>
                 </div>
             </div>
         </form>
@@ -534,6 +534,11 @@ export default {
                 return false;
             }
 
+            if (this.payment_method == 'Stripe' && !this.site_data.checkout.stripe_token) {
+                this.show_stripe_modal = true;
+                return false;
+            }
+
             if (this.no_available_option) {
                 alert('Please choose a different freight option for the current one doesn\'t handle the shipping country!');
                 return false;
@@ -583,34 +588,16 @@ export default {
         payByCard() {
             if (this.is_submitting) return false;
             this.is_submitting  =   true;
+
             this.$refs.stripe.elements
-            .confirmCardPayment(
-                this.client_secret,
-                {
-                    payment_method: {
-                        card: this.$refs.stripe.elements.element,
-                        billing_details: {
-                            name    :   !this.site_data.checkout.same_addr ?
-                                        ((this.site_data.checkout.billing.firstname + ' ' + this.site_data.checkout.billing.surname).trim()) :
-                                        ((this.site_data.checkout.shipping.firstname + ' ' + this.site_data.checkout.shipping.surname).trim())
-                        }
-                    },
-                    return_url: location.origin + '/cart/complete/'
-                }
-            ).then(result => {
-                if (result.error) {
-                    this.is_submitting  =   false;
-                    console.log(result.error.message);
-                } else {
-                    console.log(result);
-                    // The payment has been processed!
-                    if (result.paymentIntent.status === 'succeeded') {
-                        this.check_stripe_payment_cleared(() => {
-                            this.$router.push('/cart/complete/' + this.site_data.id);
-                        }, 500);
-                    }
-                }
-            });
+                .createToken()
+                .then(resp => {
+                    this.site_data.checkout.stripe_token = resp.token.id;
+                    this.show_stripe_modal = false;
+                    this.is_submitting = false;
+                    this.submit();
+                }).catch(console.error);
+
         },
         check_stripe_payment_cleared(callback, retry)
         {

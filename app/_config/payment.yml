@@ -1,0 +1,10 @@
+---
+Name: payment
+---
+SilverStripe\Omnipay\Model\Payment:
+  allowed_gateways:
+    - PaymentExpress_PxPay
+    - PayPal_Express
+    - Poli
+    - Paystation_Hosted
+    - Stripe

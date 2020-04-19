@@ -33,12 +33,15 @@ SS_DEFAULT_ADMIN_PASSWORD="passw0rd"
 SS_ENVIRONMENT_TYPE="dev"
 SS_ERROR_LOG="silverstripe.log"
 
-Cita_eCommerce_PaymentMethod_POLi='{"CERT":"CERT_PATH","CLIENTCODE":"POLI_CLIENT_CODE","AUTHCODE":"POLI_AUTH_CODE"}'
-Cita_eCommerce_PaymentMethod_DPS='{"ID":"DPS_CLIENT_ID","Key":"DPS_CLIENT_KEY"}'
-Cita_eCommerce_PaymentMethod_Paystation='{"pstn_pi":"PAYSTATION_ID","pstn_HMAC":"PAYSTATION_HMAC"}'
-Cita_eCommerce_PaymentMethod_Stripe='{"key_dev":"STRIPE_DEV_KEY","secret_dev":"STRIPE_DEV_SECRET","key":"STRIPE_LIVE_KEY","secret":"STRIPE_LIVE_SECRET"}'
-
+PaymentExpress_PxPay='{"username":"DPS_CLIENT_ID","password":"DPS_CLIENT_KEY","testMode":true}'
+PayPal_Express='{"username":"your-business-facilitator_api1.hotmail.com","password":"YOUR_PASSWORD","signature":"YOUR_SIGNATURE","testMode":true}'
+Poli='{"merchantCode":"POLI_CLIENT_CODE","authenticationCode":"POLI_AUTH_CODE"}'
+Paystation_Hosted='{"paystationId":"PAYSTATION_ID","hmacKey":"PAYSTATION_HMAC","gatewayId":"PAYSTATION","testMode":true}'
+Stripe='{"apiKey":"STRIPE_SECRET","privateKey":"STRIPE_KEY"}'
 ```
+
+NB: If it's a prod environment, please remove `# remove "testMode":true` from the gateway's config
+
 Once you've completed above, go to the browser and type in http://YOURSITE/dev/build?flush=all (then hit enter)
 
 
@@ -46,7 +49,7 @@ Once you've completed above, go to the browser and type in http://YOURSITE/dev/b
 go into `frontend` directory, run `npm install`, and wait for it to finish, and then `run npm run dev` (more commands are defined in `package.json` > `scripts` property)
 
 
-# Docker set-up 
+# Docker set-up
 
 You can go with MAMP/WAMP/LAMP solutions or docker to set up the development environment. To try it out with docker, install Docker Desktop For Mac/Winodws as a start. Then
 
@@ -67,7 +70,7 @@ SS_DATABASE_NAME="demo_shop"
 Also, you must use mysql client(i.e Mysql Workbench) to connect database, create a demo_shop schema using utf-8 charset.
 
 
-if you would like to mess up with your own docker file or start script, remember `docker-compose build ss4` to make it effective; 
+if you would like to mess up with your own docker file or start script, remember `docker-compose build ss4` to make it effective;
 
 ## Debugging
 
@@ -75,6 +78,6 @@ check logs of ss4:
 
 `docker logs --follow ss4`
 
-tap into the ss4: 
+tap into the ss4:
 
 `docker exec -it ss4 /bin/bash` when it's RUNNING.
