@@ -56,3 +56,27 @@ jobs:
       #- run: ./vendor/bin/phpunit
       #- run: ./vendor/bin/codecept build
       #- run: ./vendor/bin/codecept run
+
+  deploy:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "85:af:12:80:80:98:82:15:33:b4:4b:87:97:59:a1:32"
+      - run:
+          name: Deploy Over SSH
+          command: |
+            ssh -J $SSH_USER_JUMP@$SSH_HOST_JUMP $SSH_USER@$SSH_HOST $DEPLOY_SCRIPT
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build # only deploy once build job has completed
+          filters:
+            branches:
+              only: master # only deploy on the master branch
