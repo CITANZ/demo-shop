@@ -61,10 +61,10 @@ jobs:
     docker:
       - image: circleci/php:7.1-node-browsers
     steps:
-      - run: ssh-keyscan -t rsa -H $SSH_HOST_JUMP >> ~/.ssh/known_hosts
       - add_ssh_keys:
           fingerprints:
             - "85:af:12:80:80:98:82:15:33:b4:4b:87:97:59:a1:32"
+      - run: ssh-keyscan -t rsa -H $SSH_HOST_JUMP >> ~/.ssh/known_hosts
       - run:
           name: Deploy Over SSH
           command: |
