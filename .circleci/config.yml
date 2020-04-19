@@ -58,8 +58,8 @@ jobs:
       #- run: ./vendor/bin/codecept run
 
   deploy:
-    docker:
-      - image: circleci/buildpack-deps:stretch-scm-dind
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - add_ssh_keys:
           fingerprints:
