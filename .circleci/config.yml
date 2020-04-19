@@ -59,7 +59,7 @@ jobs:
 
   deploy:
     machine:
-      image: ubuntu-1604:201903-01
+      enabled: true
     steps:
       - add_ssh_keys:
           fingerprints:
