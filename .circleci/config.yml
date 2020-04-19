@@ -58,17 +58,17 @@ jobs:
       #- run: ./vendor/bin/codecept run
 
   deploy:
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+      - image: circleci/php:7.1-node-browsers
     steps:
-      - run: sudo apt-get update && sudo apt-get install openssh-client
       - add_ssh_keys:
           fingerprints:
             - "85:af:12:80:80:98:82:15:33:b4:4b:87:97:59:a1:32"
+      - run: ssh-keyscan -t rsa -H $SSH_HOST_JUMP >> ~/.ssh/known_hosts
       - run:
           name: Deploy Over SSH
           command: |
-            ssh -J $SSH_USER_JUMP@$SSH_HOST_JUMP $SSH_USER@$SSH_HOST $DEPLOY_SCRIPT
+            ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -J $SSH_USER_JUMP@$SSH_HOST_JUMP $SSH_USER@$SSH_HOST $DEPLOY_SCRIPT
 
 workflows:
   version: 2

@@ -1,8 +1,7 @@
-<p align="center">
-<!--   this badge should point to our cicleci, please update it after setting up. Now it's referring to Vue.js  -->
-  <a href="https://circleci.com/gh/vuejs/vue/tree/dev"><img src="https://img.shields.io/circleci/project/github/vuejs/vue/dev.svg?sanitize=true" alt="Build Status"></a>
-<!--    Other badges to be added... -->
-</p>
+## Build Status
+[![CITANZ](https://circleci.com/gh/CITANZ/demo-shop.svg?style=svg)](https://circleci.com/gh/CITANZ/demo-shop)
+
+currently hosting on [https://demoshop.cita.org.nz/](https://demoshop.cita.org.nz/)
 
 ## Overview ##
 
