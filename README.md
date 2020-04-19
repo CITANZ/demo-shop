@@ -1,6 +1,8 @@
 ## Build Status
 [![CITANZ](https://circleci.com/gh/CITANZ/demo-shop.svg?style=svg)](https://circleci.com/gh/CITANZ/demo-shop)
 
+currently hosting on [https://demoshop.cita.org.nz/](https://demoshop.cita.org.nz/)
+
 ## Overview ##
 
 This is a demo of CITANZ's eCommerce module. CITANZ members may use this repo to practise and familiarise themselves with SilverStripe 4.
