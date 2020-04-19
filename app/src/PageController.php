@@ -13,6 +13,7 @@ namespace
     use SilverStripe\ErrorPage\ErrorPage;
     use SilverStripe\Security\SecurityToken;
     use SilverStripe\Security\Member;
+    use Cita\eCommerce\eCommerce;
 
     class PageController extends ContentController
     {
@@ -64,7 +65,11 @@ namespace
         {
             parent::init();
             Requirements::css('leochenftw/leoss4bk: client/dist/app.css');
-            Requirements::javascript('https://js.stripe.com/v3/');
+
+            if (in_array('Stripe', eCommerce::get_available_payment_methods())) {
+                Requirements::javascript('https://js.stripe.com/v3/');
+            }
+
             Requirements::javascript('leochenftw/leoss4bk: client/dist/app.js');
         }
 
