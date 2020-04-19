@@ -2,7 +2,7 @@
 <div class="section">
     <div class="container">
         <h1 class="title is-1">{{site_data.title}}</h1>
-        <div class="columns">
+        <div class="columns" v-if="site_data.payment">
             <article class="column">
                 <div class="columns is-multiline">
                     <div class="column is-6">
@@ -77,7 +77,7 @@
                 </div>
             </article>
             <aside class="column is-4">
-                <p class="subtitle is-6">Amount paid</p>
+                <p class="subtitle is-6">Amount <template v-if="site_data.payment.transaction_id">paid</template><template v-else>due</template></p>
                 <p class="title is-2">{{site_data.payment.amount.toDollar()}}</p>
                 <dl class="payment-details">
                     <dt><strong>Reference No.</strong></dt>
@@ -92,13 +92,14 @@
                     <dd v-if="site_data.payment.card_holder">{{site_data.payment.card_holder}}</dd>
                 </dl>
                 <hr />
-                <p class="help">Paid at {{site_data.payment.created.nzst(true)}}, with <strong>{{site_data.payment.payment_method}}</strong></p>
+                <p class="help"><template v-if="site_data.payment.transaction_id">Paid</template><template v-else>Attempted</template> at {{site_data.payment.created.nzst(true)}}, with <strong>{{site_data.payment.payment_method}}</strong></p>
                 <hr />
                 <p v-if="show_payagain"><router-link class="button is-info" to="/cart">Try again</router-link></p>
                 <p v-else-if="require_approval"><a class="button is-warning" :href="site_data.payment.approval_url">Go Approve</a></p>
                 <p v-else-if="site_data.catalog"><router-link class="button is-info" :to="site_data.catalog">Keep shopping</router-link></p>
             </aside>
         </div>
+        <p v-else>You have not yet made any payment intent.</p>
     </div>
 </div>
 </template>
@@ -111,11 +112,7 @@ export default {
     computed    :   {
         show_payagain()
         {
-            if (this.site_data.payment.status == 'Cancelled' || this.site_data.payment.status == 'Pending' || this.site_data.payment.status == 'Failed') {
-                return true;
-            }
-
-            return false;
+            return !this.site_data.payment.transaction_id;
         },
         require_approval()
         {
