@@ -32,3 +32,4 @@ node_modules/
 *.sln
 package-lock.json
 */package-lock.json
+error.log

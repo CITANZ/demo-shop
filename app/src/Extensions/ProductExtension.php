@@ -12,7 +12,7 @@ class ProductExtension extends DataExtension
         return array_merge($this->owner->getBaseData(), [
             'title'         =>  $this->owner->Title,
             'url'           =>  $this->owner->Link(),
-            'discount_rate' =>  $this->owner->calc_special_price_discount_rate()
+            'discount_rate' =>  $this->owner->SpecialDiscountRate
         ]);
     }
 
@@ -31,25 +31,25 @@ class ProductExtension extends DataExtension
 
     public function getCoreData()
     {
-        $core           =   $this->owner->getMiniData();
-        $core['brand']  =   $this->owner->Brand()->exists() ? $this->owner->Brand()->getData() : null;
-        $core['stock']  =   $this->owner->StockCount;
-        $core['short_desc'] =   Util::preprocess_content($this->owner->ShortDesc);
+        $core = $this->owner->getMiniData();
+        $core['brand'] = $this->owner->Brand()->exists() ? $this->owner->Brand()->getData() : null;
+        $core['stock'] = $this->owner->StockCount;
+        $core['short_desc'] = Util::preprocess_content($this->owner->ShortDesc);
 
         return $core;
     }
 
     public function getData(&$data)
     {
-        $data   =   array_merge($data, $this->owner->getCoreData());
+        $data = array_merge($data, $this->owner->getCoreData());
 
-        $data['related_products']   =   $this->owner->Related()->getTileData();
-        $data['related_categories'] =   $this->get_related_categories();
-        $data['variants']           =   $this->owner->hasVariants ? $this->owner->Variants()->getData() : [$this->getCoreData()];
-        $data['top_sellers']        =   $this->owner->get_top_sellers();
-        $data['might_likes']        =   $this->get_same_kind();
-        $data['brand_siblings']     =   $this->owner->Brand()->exists() ?
-                                        $this->owner->Brand()->Products()->sort('RAND()')->limit(12)->getTileData() : null;
+        $data['related_products'] = $this->owner->Related()->getTileData();
+        $data['related_categories'] = $this->get_related_categories();
+        $data['variants'] = $this->owner->hasVariants ? $this->owner->Variants()->getData() : [$this->getCoreData()];
+        $data['top_sellers'] = $this->owner->get_top_sellers();
+        $data['might_likes'] = $this->get_same_kind();
+        $data['brand_siblings'] = $this->owner->Brand()->exists() ?
+            $this->owner->Brand()->Products()->sort('RAND()')->limit(12)->getTileData() : null;
     }
 
     private function get_same_kind()
