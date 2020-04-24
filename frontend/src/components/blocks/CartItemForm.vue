@@ -2,7 +2,7 @@
 <form method="post" @submit.prevent="update_qty">
     <fieldset :disabled="is_working">
         <div class="columns">
-            <div class="column">{{item.product.title}} {{item.product.variant_title ? ('- ' + item.product.variant_title) : ''}}</div>
+            <div class="column">{{item.product.title}}</div>
             <div class="column is-2"><input @change="update_qty" type="number" class="input" v-model="item.quantity" /></div>
             <div class="column is-narrow"><a @click.prevent="delete_item" class="button is-danger">Delete</a></div>
         </div>
