@@ -5,8 +5,8 @@
         <div class="cart-content" v-if="site_data.cart">
             <template v-if="site_data.cart.messages && site_data.cart.messages.length">
                 <div class="notification is-warning" v-for="message in site_data.cart.messages">
-                    <button class="delete"></button>
-                    <div v-html="message"></div>
+                    <button class="delete" @click.prevent="FlagMessageRead(message.id, $event)"></button>
+                    <div v-html="message.content"></div>
                 </div>
             </template>
             <table class="is-fullwidth table">
@@ -47,6 +47,13 @@ import CartItemForm from '../blocks/CartItemForm';
 export default {
     name        :   'CartPage',
     mixins      :   [ BasePageMixin ],
-    components  :   { 'cart-item' : CartItemForm }
+    components  :   { 'cart-item' : CartItemForm },
+    methods: {
+        FlagMessageRead(id, e) {
+            this.$cart.dispatch('MesasgeRead', id).then(data => {
+                this.$store.state.site_data.cart = data;
+            });
+        }
+    }
 }
 </script>

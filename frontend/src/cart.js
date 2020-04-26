@@ -23,6 +23,17 @@ export default new Vuex.Store({
         }
     },
     actions     :   {
+        MesasgeRead({ commit }, id) {
+            return new Promise((resolve, reject) => {
+                axios.post(base_url + `cart/read/${id}`).then((resp) => {
+                    commit('update_cart', resp.data);
+                    resolve(resp.data);
+                }).catch((error) => {
+                    commit('set_error', error);
+                    reject(error);
+                });
+            });
+        },
         add_to_cart({ commit }, data)
         {
             return new Promise((resolve, reject) => {
