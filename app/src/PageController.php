@@ -68,7 +68,7 @@ namespace
 
             $gateways = eCommerce::get_available_payment_methods();
 
-            if (!empty($gateways) && in_array('Stripe', $gateways)) {
+            if (!is_array($gateways) && in_array('Stripe', $gateways)) {
                 Requirements::javascript('https://js.stripe.com/v3/');
             }
 
