@@ -394,13 +394,13 @@ export default {
         {
             if (!this.site_data || !this.site_data.checkout) return 0;
 
-            return this.site_data.checkout.amounts.discoutable_taxable;
+            return this.site_data.checkout.amounts.discountable_taxable;
         },
         dis_notax()
         {
             if (!this.site_data || !this.site_data.checkout) return 0;
 
-            return this.site_data.checkout.amounts.discoutable_nontaxable;
+            return this.site_data.checkout.amounts.discountable_nontaxable;
         },
         nondis_tax()
         {
