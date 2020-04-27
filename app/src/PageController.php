@@ -66,7 +66,9 @@ namespace
             parent::init();
             Requirements::css('leochenftw/leoss4bk: client/dist/app.css');
 
-            if (in_array('Stripe', eCommerce::get_available_payment_methods())) {
+            $gateways = eCommerce::get_available_payment_methods();
+
+            if (!empty($gateways) && in_array('Stripe', $gateways)) {
                 Requirements::javascript('https://js.stripe.com/v3/');
             }
 
