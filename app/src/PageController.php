@@ -14,6 +14,8 @@ namespace
     use SilverStripe\Security\SecurityToken;
     use SilverStripe\Security\Member;
     use Cita\eCommerce\eCommerce;
+    use SilverStripe\Control\Session;
+    use SilverStripe\Core\Injector\Injector;
 
     class PageController extends ContentController
     {
