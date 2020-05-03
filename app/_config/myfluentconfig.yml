@@ -1,0 +1,11 @@
+---
+Name: myfluentconfig
+---
+TractorCow\Fluent\Extension\FluentDirectorExtension:
+  disable_default_prefix: true
+
+TractorCow\Fluent\Extension\FluentDirectorExtension:
+  detect_locale: false
+
+TractorCow\Fluent\Middleware\DetectLocaleMiddleware:
+  persist_cookie: false

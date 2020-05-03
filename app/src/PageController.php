@@ -14,6 +14,10 @@ namespace
     use SilverStripe\Security\SecurityToken;
     use SilverStripe\Security\Member;
     use Cita\eCommerce\eCommerce;
+    use SilverStripe\Control\Session;
+    use SilverStripe\Core\Injector\Injector;
+    use TractorCow\Fluent\State\FluentState;
+    use TractorCow\Fluent\State\LocaleDetector;
 
     class PageController extends ContentController
     {
@@ -34,7 +38,7 @@ namespace
                 return parent::handleAction($request, $action);
             }
 
-            $header         =   $this->getResponse();
+            $header = $this->getResponse();
             $this->addCORSHeaders($header);
 
             if (SiteConfig::current_site_config()->UnderMaintenance && !$this->isAdmin()) {
@@ -52,7 +56,10 @@ namespace
             }
 
             return json_encode(array_merge($this->getData(), [
-                'session' => ['csrf' => SecurityToken::inst()->getSecurityID()]
+                'session' => [
+                    'csrf' => SecurityToken::inst()->getSecurityID(),
+                    'locale' => $this->PreferredLang
+                ]
             ]));
         }
 
@@ -65,6 +72,9 @@ namespace
         {
             parent::init();
             Requirements::css('leochenftw/leoss4bk: client/dist/app.css');
+
+            // FluentState::singleton()->setLocale('zh_CN');
+            \Leochenftw\Debugger::inspect(FluentState::singleton()->getLocale());
 
             $gateways = eCommerce::get_available_payment_methods();
 
@@ -181,6 +191,29 @@ namespace
         public function getYear()
         {
             return date('Y', time());
+        }
+
+        public function getPreferredLang()
+        {
+            $request = $this->request;
+
+            if (!$request->getSession()->get('UserPreferredLang')) {
+                $detector = Injector::inst()->get(LocaleDetector::class);
+                $localeObj = $detector->detectLocale($request);
+                if ($localeObj) {
+                    $detected_locale = $localeObj->getLocale();
+                    $this->request->getSession()->set('UserPreferredLang', $detected_locale);
+                    // $this->request->getSession()->save($this->request);
+                    return $detected_locale;
+                }
+
+                $detected_locale = FluentState::singleton()->getLocale();
+                $this->request->getSession()->set('UserPreferredLang', $detected_locale);
+                // $this->request->getSession()->save($this->request);
+                return $detected_locale;
+            }
+
+            return $this->request->getSession()->get('UserPreferredLang');
         }
     }
 }

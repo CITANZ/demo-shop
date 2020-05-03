@@ -26,6 +26,9 @@ SilverStripe\Assets\File:
   allowed_extensions:
     - svg
 
+SilverStripe\Control\Session:
+  cookie_secure: true
+
 SilverStripe\Assets\Flysystem\AssetAdapter:
   file_permissions:
     file:
