@@ -54,10 +54,3 @@ Cita\eCommerce\Model\Product:
 SilverStripe\SiteConfig\SiteConfig:
   extensions:
     - App\Web\Extension\SiteConfigExtension
-
-# ---
-# Only:
-#   environment: 'live'
-# ---
-# SilverStripe\SiteConfig\SiteConfig:
-#   FrontendEntryFile: /var/www/silverstripe/ZEF/zeffer-4.0/frontend/dist/index.html

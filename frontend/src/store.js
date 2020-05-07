@@ -2,13 +2,14 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
-
+const body = document.getElementsByTagName('body')[0];
 export default new Vuex.Store({
     state       :   {
         error       :   null,
         site_data   :   null,
         is_loading  :   true,
         is_mobile   :   false,
+        locale      :   body.dataset.preferredlang,
         width       :   window.innerWidth,
         offset      :   0
     },
@@ -31,20 +32,23 @@ export default new Vuex.Store({
                     state.is_loading    =   false;
                 }, 100);
             }
-
+        },
+        updateLocale(state, lang)
+        {
+            state.locale = lang;
         },
         toggle_loading(state, loading)
         {
             state.is_loading    =   loading;
         }
     },
-    actions     :   {
+    actions: {
         get_page_data({ commit }, path)
         {
             commit('clear_error');
             commit('update_data', null);
             return new Promise((resolve, reject) => {
-                axios.get(base_url + path.ltrim('/')).then((resp) => {
+                axios.get(path).then((resp) => {
                     commit('update_data', resp.data);
                     resolve();
                 }).catch((error) => {
@@ -65,6 +69,14 @@ export default new Vuex.Store({
                 if (error.response && error.reponse.data) {
                     commit('update_data', error.response.data);
                 }
+            });
+        },
+        SwitchLang({ commit }, lang) {
+            return new Promise((resolve, reject) => {
+                axios.post(base_url + `api/v/1/session`, lang).then(resp => {
+                    commit('updateLocale', resp.data);
+                    resolve(resp);
+                }).catch(reject);
             });
         }
     }

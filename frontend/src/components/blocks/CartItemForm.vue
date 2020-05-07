@@ -6,7 +6,7 @@
                 <p><span v-if="isBundle">[BUNDLED] </span>{{item.product.title}}</p>
                 <div class="content" v-if="isBundle">
                     <ul>
-                        <li v-for="variant in item.product.variants">{{ variant.title }} x 1 ({{ variant.price.toDollar() }})</li>
+                        <li v-for="variant in item.product.variants">{{ variant.title }} x {{ variant.count }} ({{ (variant.price * variant.count).toDollar() }})</li>
                     </ul>
                 </div>
             </div>

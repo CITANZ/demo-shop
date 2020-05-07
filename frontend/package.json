@@ -8,6 +8,7 @@
     "once": "cross-env NODE_ENV=development webpack --config build/webpack.config.js --mode=development",
     "dev": "cross-env NODE_ENV=development webpack --config build/webpack.config.js --watch --mode=development",
     "prod": "cross-env NODE_ENV=production webpack --config build/webpack.config.js --mode=production",
+    "build": "cross-env NODE_ENV=production webpack --config build/webpack.config.js --mode=production",
     "prod:watch": "cross-env NODE_ENV=production webpack --config build/webpack.config.js --watch --mode=production"
   },
   "dependencies": {

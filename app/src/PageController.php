@@ -56,10 +56,12 @@ namespace
             }
 
             return json_encode(array_merge($this->getData(), [
-                'session' => [
-                    'csrf' => SecurityToken::inst()->getSecurityID(),
-                    'locale' => $this->PreferredLang
-                ]
+                'session' => array_merge([
+                    'csrf' => SecurityToken::inst()->getSecurityID()
+                ], $this->Locales()->exists() ? [
+                    'locale' => $this->PreferredLang,
+                    'locales' => $this->Locales()->map('Locale', 'Title')->toArray()
+                ] : [])
             ]));
         }
 
@@ -72,9 +74,6 @@ namespace
         {
             parent::init();
             Requirements::css('leochenftw/leoss4bk: client/dist/app.css');
-
-            // FluentState::singleton()->setLocale('zh_CN');
-            \Leochenftw\Debugger::inspect(FluentState::singleton()->getLocale());
 
             $gateways = eCommerce::get_available_payment_methods();
 
@@ -203,17 +202,20 @@ namespace
                 if ($localeObj) {
                     $detected_locale = $localeObj->getLocale();
                     $this->request->getSession()->set('UserPreferredLang', $detected_locale);
-                    // $this->request->getSession()->save($this->request);
                     return $detected_locale;
                 }
 
                 $detected_locale = FluentState::singleton()->getLocale();
                 $this->request->getSession()->set('UserPreferredLang', $detected_locale);
-                // $this->request->getSession()->save($this->request);
                 return $detected_locale;
             }
 
             return $this->request->getSession()->get('UserPreferredLang');
+        }
+
+        public function getTestTitle()
+        {
+            _t('Cita\eCommerce\Controller\Cart' . 'TITLE', 'Cart');
         }
     }
 }

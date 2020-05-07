@@ -5,7 +5,7 @@ services:
     build:
       context: .
     volumes:
-      - ..:/var/www/html
+      - ..:/var/www/html:cached
     ports:
       - "80:80/tcp"
     command: "/var/tmp/start.sh"
@@ -27,4 +27,3 @@ volumes:
 networks:
   default:
     name: demo_shop_nw
-  
