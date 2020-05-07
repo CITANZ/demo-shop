@@ -2,22 +2,6 @@
 Name: myextensions
 After: 'cita/ecommerce'
 ---
-Cita\eCommerce\Model\Variant:
-  extensions:
-    - App\Web\Extension\VariantExtension
-
-Cita\eCommerce\Model\Product:
-  extensions:
-    - App\Web\Extension\ProductExtesion
-
 Cita\eCommerce\Model\Catalog:
   extensions:
     - App\Web\Extension\CatalogExtendsion
-
-# Cita\eCommerce\Model\Category:
-#   extensions:
-#     - TractorCow\Fluent\Extension\FluentExtension
-#
-# Cita\eCommerce\Model\Tag:
-#   extensions:
-#     - TractorCow\Fluent\Extension\FluentExtension
