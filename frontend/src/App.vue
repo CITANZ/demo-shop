@@ -150,10 +150,6 @@ export default {
         RefinePath(path) {
             let locale = this.$store.state.locale;
 
-            if (locale == 'en_NZ') {
-                return base_url + path.ltrim('/');
-            }
-
             return base_url + locale + path.replace('/' + locale, '');
         }
     }
