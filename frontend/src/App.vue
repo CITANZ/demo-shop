@@ -150,7 +150,7 @@ export default {
         RefinePath(path) {
             let locale = this.$store.state.locale;
 
-            return base_url + locale + path.replace('/' + locale, '');
+            return base_url + locale + path.replace('/' + locale, '').replace('/' + this.$store.state.page_lang, '');
         }
     }
 }

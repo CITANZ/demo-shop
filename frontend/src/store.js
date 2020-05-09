@@ -9,6 +9,7 @@ export default new Vuex.Store({
         site_data   :   null,
         is_loading  :   true,
         is_mobile   :   false,
+        page_lang   :   document.documentElement.lang.replace(/\-/gi, '_'),
         locale      :   body.dataset.preferredlang,
         width       :   window.innerWidth,
         offset      :   0

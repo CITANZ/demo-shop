@@ -1,20 +1,29 @@
 /*
  * Prototypes
  * */
- if (!Object.entries) {
-     Object.prototype.entries = function( obj )
-     {
-         var ownProps = Object.keys( obj ),
-             i = ownProps.length,
-             resArray = new Array(i); // preallocate the Array
+if (!Object.entries) {
+    Object.prototype.entries = function( obj )
+    {
+        var ownProps = Object.keys( obj ),
+            i = ownProps.length,
+            resArray = new Array(i); // preallocate the Array
 
-         while (i--) {
-             resArray[i] = [ownProps[i], obj[ownProps[i]]];
-         }
+        while (i--) {
+            resArray[i] = [ownProps[i], obj[ownProps[i]]];
+        }
 
-         return resArray;
-     };
- }
+        return resArray;
+    };
+}
+
+String.prototype.removeLocales = function(find, replace) {
+  let replaceString = this;
+  for (let i = 0; i < find.length; i++) {
+      console.log(find[i]);
+    replaceString = replaceString.replace('/' + find[i], replace);
+  }
+  return replaceString;
+};
 
 String.prototype.kmark = function() {
     if (this.length === 0) {
