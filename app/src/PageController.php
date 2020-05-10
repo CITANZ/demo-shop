@@ -58,7 +58,7 @@ namespace
             return json_encode(array_merge($this->getData(), [
                 'session' => array_merge([
                     'csrf' => SecurityToken::inst()->getSecurityID()
-                ], $this->Locales()->exists() ? [
+                ], $this->hasMethod('Locales') && $this->Locales()->exists() ? [
                     'locale' => $this->PreferredLang,
                     'locales' => $this->Locales()->map('Locale', 'Title')->toArray()
                 ] : [])
