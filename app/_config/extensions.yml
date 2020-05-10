@@ -25,3 +25,4 @@ Cita\eCommerce\Model\Variant:
 SilverStripe\SiteConfig\SiteConfig:
   extensions:
     - App\Web\Extension\SiteConfigExtension
+    - TractorCow\Fluent\Extension\FluentExtension
