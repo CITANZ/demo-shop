@@ -42,15 +42,3 @@ SilverStripe\Control\Email\Email:
   admin_email: leo@leochen.co.nz
   noreply_email:
     noreply@leochen.co.nz: 'Sitename'
-
-Cita\eCommerce\Model\Order:
-  extensions:
-    - App\Web\Extension\OrderExtendsion
-
-Cita\eCommerce\Model\Product:
-  extensions:
-    - App\Web\Extension\ProductExtension
-
-SilverStripe\SiteConfig\SiteConfig:
-  extensions:
-    - App\Web\Extension\SiteConfigExtension
