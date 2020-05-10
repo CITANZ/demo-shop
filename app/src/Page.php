@@ -62,6 +62,7 @@ namespace
                 'id'            =>  $this->ID,
                 'siteconfig'    =>  $siteconfig->getData(),
                 'navigation'    =>  $this->get_menu_items(null, $locale),
+                'locale'        =>  $this->getSourceLocale()->Locale,
                 'title'         =>  $this->URLSegment == 'home' ? SiteConfig::current_site_config()->Title : (!empty($this->MetaTitle) ? $this->MetaTitle : $this->Title),
                 'content'       =>  Util::preprocess_content($this->Content),
                 'pagetype'      =>  $this->get_type($this->ClassName),

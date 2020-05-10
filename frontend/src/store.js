@@ -29,6 +29,8 @@ export default new Vuex.Store({
             if (!data) {
                 state.is_loading    =   true;
             } else {
+                console.log(data.locale);
+                state.page_lang = data.locale;
                 setTimeout(function () {
                     state.is_loading    =   false;
                 }, 100);
