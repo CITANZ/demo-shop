@@ -4,6 +4,9 @@ namespace App\Web\Layout;
 use Page;
 use SilverStripe\Versioned\Versioned;
 use Leochenftw\Util\CacheHandler;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Control\HTTPRequest;
+use TractorCow\Fluent\State\FluentState;
 
 /**
  * Description
@@ -31,13 +34,16 @@ class HomePage extends Page
 
     public function getData()
     {
-        $data = CacheHandler::read('page.' . $this->ID, 'PageData');
+        $locale = Injector::inst()->get(HTTPRequest::class)->getSession()->get('UserPreferredLang');
+        FluentState::singleton()->setLocale($locale);
+
+        $data = CacheHandler::read("page.{$this->ID}.$locale", 'PageData');
 
         if (empty($data)) {
 
             $data   =   parent::getData();
 
-            CacheHandler::save('page.' . $this->ID, $data, 'PageData');
+            CacheHandler::save("page.{$this->ID}.$locale", $data, 'PageData');
         }
 
         return $data;

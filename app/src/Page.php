@@ -13,6 +13,10 @@ namespace
     use SilverStripe\Core\Flushable;
     use Leochenftw\Util\CacheHandler;
     use SilverStripe\Security\Member;
+    use Cita\eCommerce\Model\Catalog;
+    use SilverStripe\Core\Injector\Injector;
+    use SilverStripe\Control\HTTPRequest;
+    use TractorCow\Fluent\State\FluentState;
 
     class Page extends SiteTree implements Flushable
     {
@@ -50,11 +54,15 @@ namespace
 
         public function getData()
         {
+            $locale = Injector::inst()->get(HTTPRequest::class)->getSession()->get('UserPreferredLang');
+            FluentState::singleton()->setLocale($locale);
+
             $siteconfig =   SiteConfig::current_site_config();
             $data       =   [
                 'id'            =>  $this->ID,
                 'siteconfig'    =>  $siteconfig->getData(),
-                'navigation'    =>  $this->get_menu_items(),
+                'navigation'    =>  $this->get_menu_items(null, $locale),
+                'locale'        =>  $this->getSourceLocale()->Locale,
                 'title'         =>  $this->URLSegment == 'home' ? SiteConfig::current_site_config()->Title : (!empty($this->MetaTitle) ? $this->MetaTitle : $this->Title),
                 'content'       =>  Util::preprocess_content($this->Content),
                 'pagetype'      =>  $this->get_type($this->ClassName),
@@ -233,27 +241,27 @@ namespace
             }
 
             $ancestors[]    =   [
-                'title' =>  $item->Parent()->Title,
-                'link'   =>  $item->Parent()->Link() != '/' ? rtrim($item->Parent()->Link(), '/') : '/'
+                'title' => $item->Parent()->Title,
+                'link' => $item->Parent()->Link()
             ];
 
             return $this->get_ancestors($item->Parent(), $ancestors);
         }
 
-        private function get_menu_items($nav = null)
+        private function get_menu_items($nav = null, $locale = 'en_NZ')
         {
             $controller =   Controller::curr();
             $controller =   !$controller->hasMethod('getMenu') ? PageController::create() : $controller;
             $nav        =   empty($nav) ? $controller->getMenu(1) : $nav;
             $list       =   [];
             foreach ($nav as $item) {
-                $link   =   $item->Link();
+                $link   =   str_replace("/{$locale}", '', $item->Link());
 
                 $list[] =   [
                     'label'     =>  $item->Title,
                     'url'       =>  $link,
                     'active'    =>  $item->isSection() || $item->isCurrent(),
-                    'sub'       =>  $this->get_menu_items($item->Children()),
+                    'sub'       =>  ($item instanceof Catalog) ? [] : $this->get_menu_items($item->Children(), $locale),
                     'pagetype'  =>  $this->get_type($item->ClassName)
                 ];
             }

@@ -26,6 +26,9 @@ SilverStripe\Assets\File:
   allowed_extensions:
     - svg
 
+SilverStripe\Control\Session:
+  cookie_secure: true
+
 SilverStripe\Assets\Flysystem\AssetAdapter:
   file_permissions:
     file:
@@ -39,22 +42,3 @@ SilverStripe\Control\Email\Email:
   admin_email: leo@leochen.co.nz
   noreply_email:
     noreply@leochen.co.nz: 'Sitename'
-
-Cita\eCommerce\Model\Order:
-  extensions:
-    - App\Web\Extension\OrderExtendsion
-
-Cita\eCommerce\Model\Product:
-  extensions:
-    - App\Web\Extension\ProductExtension
-
-SilverStripe\SiteConfig\SiteConfig:
-  extensions:
-    - App\Web\Extension\SiteConfigExtension
-
-# ---
-# Only:
-#   environment: 'live'
-# ---
-# SilverStripe\SiteConfig\SiteConfig:
-#   FrontendEntryFile: /var/www/silverstripe/ZEF/zeffer-4.0/frontend/dist/index.html

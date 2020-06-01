@@ -1,0 +1,28 @@
+---
+Name: myextensions
+After: 'cita/ecommerce'
+---
+Cita\eCommerce\Model\Catalog:
+  extensions:
+    - App\Web\Extension\CatalogExtendsion
+
+Cita\eCommerce\Model\Order:
+  extensions:
+    - App\Web\Extension\OrderExtendsion
+
+Cita\eCommerce\Model\Product:
+  extensions:
+    - App\Web\Extension\ProductExtension
+
+Cita\eCommerce\Model\Variant:
+  extensions:
+    - TractorCow\Fluent\Extension\FluentExtension
+  translate:
+    - VariantTitle
+    - ShortDesc
+    - Content
+
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - App\Web\Extension\SiteConfigExtension
+    - TractorCow\Fluent\Extension\FluentExtension

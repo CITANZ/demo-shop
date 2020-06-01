@@ -24,7 +24,7 @@
     $SiteConfig.GoogleAnalyticsCode.RAW
     $SiteConfig.GTMHead.RAW
 </head>
-<body <% if $i18nScriptDirection %>dir="$i18nScriptDirection"<% end_if %>>
+<body <% if $i18nScriptDirection %>dir="$i18nScriptDirection"<% end_if %> data-preferredlang="$PreferredLang">
 $SiteConfig.GTMBody.RAW
 <% if $URLSegment == 'Security' %>
 <main id="main" class="main">

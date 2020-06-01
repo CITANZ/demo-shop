@@ -16,6 +16,8 @@ namespace
     use Cita\eCommerce\eCommerce;
     use SilverStripe\Control\Session;
     use SilverStripe\Core\Injector\Injector;
+    use TractorCow\Fluent\State\FluentState;
+    use TractorCow\Fluent\State\LocaleDetector;
 
     class PageController extends ContentController
     {
@@ -36,7 +38,7 @@ namespace
                 return parent::handleAction($request, $action);
             }
 
-            $header         =   $this->getResponse();
+            $header = $this->getResponse();
             $this->addCORSHeaders($header);
 
             if (SiteConfig::current_site_config()->UnderMaintenance && !$this->isAdmin()) {
@@ -54,7 +56,12 @@ namespace
             }
 
             return json_encode(array_merge($this->getData(), [
-                'session' => ['csrf' => SecurityToken::inst()->getSecurityID()]
+                'session' => array_merge([
+                    'csrf' => SecurityToken::inst()->getSecurityID()
+                ], $this->hasMethod('Locales') && $this->Locales()->exists() ? [
+                    'locale' => $this->PreferredLang,
+                    'locales' => $this->Locales()->map('Locale', 'Title')->toArray()
+                ] : [])
             ]));
         }
 
@@ -183,6 +190,32 @@ namespace
         public function getYear()
         {
             return date('Y', time());
+        }
+
+        public function getPreferredLang()
+        {
+            $request = $this->request;
+
+            if (!$request->getSession()->get('UserPreferredLang')) {
+                $detector = Injector::inst()->get(LocaleDetector::class);
+                $localeObj = $detector->detectLocale($request);
+                if ($localeObj) {
+                    $detected_locale = $localeObj->getLocale();
+                    $this->request->getSession()->set('UserPreferredLang', $detected_locale);
+                    return $detected_locale;
+                }
+
+                $detected_locale = FluentState::singleton()->getLocale();
+                $this->request->getSession()->set('UserPreferredLang', $detected_locale);
+                return $detected_locale;
+            }
+
+            return $this->request->getSession()->get('UserPreferredLang');
+        }
+
+        public function getTestTitle()
+        {
+            _t('Cita\eCommerce\Controller\Cart' . 'TITLE', 'Cart');
         }
     }
 }

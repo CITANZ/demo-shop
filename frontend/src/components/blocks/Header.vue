@@ -20,6 +20,14 @@
                 <div class="navbar-item">
                     <router-link to="/cart">Cart</router-link>
                 </div>
+                <div v-if="site_data.session.locales" class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        {{ selectedLang }}
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" v-for="(item, key) in site_data.session.locales" @click.prevent="switchLang(key)">{{ item }}</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -45,6 +53,14 @@ export default {
             }
 
             return null
+        },
+        selectedLang()
+        {
+            if (this.site_data && this.site_data.session.locale && this.site_data.session.locales) {
+                return this.site_data.session.locales[this.site_data.session.locale];
+            }
+
+            return 'English';
         }
     },
     methods     :   {
@@ -63,6 +79,18 @@ export default {
             e.preventDefault();
             $(window).unbind('mousedown', this.click_to_close).on('mousedown', this.click_to_close);
             this.mobile_menu_is_active = !this.mobile_menu_is_active;
+        },
+        switchLang(lang)
+        {
+            if (this.site_data.session.locale == lang) {
+                return false;
+            }
+            
+            let data = new FormData();
+            data.append('lang', lang);
+            this.$store.dispatch('SwitchLang', data).then( resp => {
+                this.$bus.$emit('onRefreshRequest');
+            });
         }
     }
 }

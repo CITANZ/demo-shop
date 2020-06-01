@@ -122,7 +122,7 @@ export default {
     },
     watch: {
         $route(to, from) {
-            this.$store.dispatch('get_page_data', to.fullPath).then(this.handle_page_data);
+            this.$store.dispatch('get_page_data', this.RefinePath(to.fullPath)).then(this.handle_page_data);
         }
     },
     created() {
@@ -132,9 +132,13 @@ export default {
         }).on('resize', function(e) {
             me.$store.state.width   =   window.innerWidth;
         });
-        this.$store.dispatch('get_page_data', this.$route.fullPath).then(this.handle_page_data);
+        this.$store.dispatch('get_page_data', this.RefinePath(this.$route.fullPath)).then(this.handle_page_data);
         this.$bus.$on('onCartUpdate', (cart) => {
             this.site_data.session.cart =   cart;
+        });
+
+        this.$bus.$on('onRefreshRequest', () => {
+            this.$store.dispatch('get_page_data', this.RefinePath(this.$route.fullPath)).then(this.handle_page_data);
         });
     },
     methods :   {
@@ -142,6 +146,10 @@ export default {
             this.$nextTick().then(() => {
                 $(window).resize().scroll();
             });
+        },
+        RefinePath(path) {
+            let locale = this.$store.state.locale;
+            return base_url + locale + path.replace('/' + locale, '').replace('/' + this.$store.state.page_lang, '');
         }
     }
 }
