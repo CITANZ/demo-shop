@@ -43,6 +43,7 @@ NB: If it's a prod environment, please remove `# remove "testMode":true` from th
 
 Once you've completed above, go to the browser and type in http://YOURSITE/dev/build?flush=all (then hit enter)
 
+Data initialization has be done after installation. Go to dashboard `/admin`, create a `Catalog` page (for example, 'Products'), create another `Product` page under the `Catalog` page, add a Variant in `Variant` tab, then make sure its price and stock is set. Then the shop should be alright.
 
 ### Frontend ###
 go into `frontend` directory, run `npm install`, and wait for it to finish, and then `run npm run dev` (more commands are defined in `package.json` > `scripts` property)
